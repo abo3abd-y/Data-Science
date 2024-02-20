@@ -1,0 +1,2030 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{hw02}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Initialize Otter}
+\PY{k+kn}{import} \PY{n+nn}{otter}
+\PY{n}{grader} \PY{o}{=} \PY{n}{otter}\PY{o}{.}\PY{n}{Notebook}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{hw02.ipynb}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \subsubsection{Importing Libraries and Magic
+Commands}\label{importing-libraries-and-magic-commands}
+
+In CSCI 3022, we will be using common Python libraries to help us
+process data. By convention, we import all libraries at the very top of
+the notebook. There are also a set of standard aliases that are used to
+shorten the library names. Below are some of the libraries that you may
+encounter throughout this assignment, along with their respective
+aliases.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{plotly}\PY{n+nn}{.}\PY{n+nn}{express} \PY{k}{as} \PY{n+nn}{px}
+\PY{k+kn}{from} \PY{n+nn}{csci3022\PYZus{}utils} \PY{k+kn}{import} \PY{o}{*}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \section{Homework 2: Prerequisite Review Part 2 \& Exploratory Data
+Analysis}\label{homework-2-prerequisite-review-part-2-exploratory-data-analysis}
+
+\subsection{\texorpdfstring{Due Date: \st{Thursday, Jan 25th,} Friday,
+Jan 26th 11:59 PM on
+Gradescope}{Due Date: Thursday, Jan 25th, Friday, Jan 26th 11:59 PM on Gradescope}}\label{due-date-thursday-jan-25th-friday-jan-26th-1159-pm-on-gradescope}
+
+\subsubsection{Detailed Submission Instructions Are Provided at the end
+of this
+Notebook}\label{detailed-submission-instructions-are-provided-at-the-end-of-this-notebook}
+
+\subsection{Collaboration Policy}\label{collaboration-policy}
+
+Data science is a collaborative activity. However a key step in learning
+and retention is \textbf{creating solutions on your own.}
+
+Below are examples of acceptable vs unacceptable use of resources and
+collaboration when doing HW assignments in CSCI 3022.
+
+The following would be some \textbf{examples of cheating} when working
+on HW assignments in CSCI 3022. Any of these constitute a
+\textbf{violation of the course's collaboration policy and will result
+in an F in the course and a trip to the honor council}.
+
+\begin{itemize}
+\tightlist
+\item
+  Consulting web pages that may have a solution to a given homework
+  problem or one similar is cheating. However, consulting the class
+  notes, and web pages that explain the material taught in class but do
+  NOT show a solution to the homework problem in question are
+  permissible to view. Clearly, there's a fuzzy line here between a
+  valid use of resources and cheating. To avoid this line, one should
+  merely consult the course notes, the course textbook, and references
+  that contain syntax and/or formulas.
+\item
+  Copying a segment of code or math solution of three lines or more from
+  another student from a printout, handwritten copy, or by looking at
+  their computer screen
+\item
+  Allowing another student to copy a segment of your code or math
+  solution of three lines or more
+\item
+  Taking a copy of another student's work (or a solution found online)
+  and then editing that copy
+\item
+  Reading someone else's solution to a problem on the HW before writing
+  your own.
+\item
+  Asking someone to write all or part of a program or solution for you.
+\item
+  Asking someone else for the code necessary to fix the error for you,
+  other than for simple syntactical errors
+\end{itemize}
+
+On the other hand, the following are some \textbf{examples of things
+which would NOT usually be considered to be cheating}: - Working on a HW
+problem on your own first and then discussing with a classmate a
+particular part in the problem solution where you are stuck. After
+clarifying any questions you should then continue to write your solution
+independently. - Asking someone (or searching online) how a particular
+construct in the language works. - Asking someone (or searching online)
+how to formulate a particular construct in the language. - Asking
+someone for help in finding an error in your program.\\
+- Asking someone why a particular construct does not work as you
+expected in a given program.
+
+To test whether you are truly doing your own work and retaining what
+you've learned you should be able to easily reproduce from scratch and
+explain a HW solution that was your own when asked in office hours by a
+TA/Instructor or on a quiz/exam.
+
+If you have difficulty in formulating the general solution to a problem
+on your own, or you have difficulty in translating that general solution
+into a program, it is advisable to see your instructor or teaching
+assistant rather than another student as this situation can easily lead
+to a, possibly inadvertent, cheating situation.
+
+We are here to help! Visit HW Hours and/or post questions on Piazza!
+
+    \subsection{Grading}\label{grading}
+
+Grading is broken down into autograded answers and manually graded
+answers.
+
+For autograded answers, the results of your code are compared to
+provided and/or hidden tests.
+
+For manually graded answers you must show and explain all steps. Graders
+will evaluate how well you answered the question and/or fulfilled the
+requirements of the question.
+
+\subsubsection{Score breakdown}\label{score-breakdown}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Question & Points & Grading Type \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Question 1a & 3 & autograded \\
+Question 1b & 4 & manual \\
+Question 1c & 3 & manual \\
+Question 2a & 4 & manual \\
+Question 2b & 6 & manual \\
+Question 3a & 3 & auto \\
+Question 3b & 3 & manual \\
+Question 3c & 1 & autograded \\
+Question 3d & 4 & manual \\
+Question 4a & 8 & autograded and manual \\
+Question 4b & 4 & autograded \\
+Question 4c & 4 & autograded \\
+Question 4d & 3 & manual \\
+Total & 50 & \\
+\end{longtable}
+
+    \subsection{Recommended Readings for this
+HW:}\label{recommended-readings-for-this-hw}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://canvas.colorado.edu/courses/101142/pages/prerequisite-review-calculus-and-discrete-structures?module_item_id=5144193}{Prerequisite
+  Review Resources posted on the Modules in Canvas}
+\item
+  \href{https://learningds.org/ch/06/pandas_intro.html}{Learning Data
+  Science Chapter 6 - All (Subsetting, Aggregating, Joining,
+  Transforming)}
+\item
+  \href{https://learningds.org/ch/08/files_granularity.html\#table-shape-and-granularity}{Learning
+  Data Science Section 8.6 (Table Shape and Granularity)}
+\end{itemize}
+
+    \subsection{}\label{section}
+
+\subsection{\texorpdfstring{\textbf{Shortcuts:}
+\hyperref[p2]{Question 2} \textbar{} \hyperref[p3]{Question 3}
+\textbar{} \hyperref[p4]{Question 4}
+\textbar{}}{Shortcuts:  \textbar{}  \textbar{}  \textbar{}}}\label{shortcuts-question-2-question-3-question-4}
+
+    
+
+    \subsection{\texorpdfstring{ Question 1: Prerequisites: Discrete
+Structures
+Review}{ Question 1: Prerequisites: Discrete Structures Review}}\label{question-1-prerequisites-discrete-structures-review}
+
+You will need a solid understanding of the following probability
+concepts from Discrete Structures to succeed in this course.
+
+See the
+\href{https://canvas.colorado.edu/courses/101142/pages/prerequisite-review-calculus-and-discrete-structures?module_item_id=5144193}{Prerequisite
+Review Resources} posted on Canvas if you need to review any of these
+key concepts.
+
+    \subsubsection{Question 1a)}\label{question-1a}
+
+A coin is flipped 10 times. How many possible outcomes have exactly 3
+heads?
+
+Use code to enter your answer in the cell below.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{q1a\PYZus{}answer} \PY{o}{=} \PY{l+m+mi}{120} \PY{c+c1}{\PYZsh{}combination with repition not allowed because we are basically saying that order does not really matter here in this question and repitiion is not allowed either}
+
+\PY{c+c1}{\PYZsh{}since it is a coin flip and we are \PYZdq{}picking\PYZdq{} anything and putting it back}
+\PY{n}{q1a\PYZus{}answer}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+120
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{q1a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+q1a results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \paragraph{Question 1b)}\label{question-1b}
+
+What is the probability that if I roll two 6-sided dice they add up to
+\textbf{at most} \(9\)? Use LaTeX (not code) in the cell directly below
+to show all of your steps and fully justify your answer.
+
+    \subsection{Answer}\label{answer}
+
+\subsubsection{\texorpdfstring{\textbf{Part 1: finding how many ways we
+can combine two results from the
+dice}}{Part 1: finding how many ways we can combine two results from the dice}}\label{part-1-finding-how-many-ways-we-can-combine-two-results-from-the-dice}
+
+First of all, we need to understand how many ways we can combine those
+two rolls. Since ordering matters here since, for example, rolling 4 as
+the first dice and 2 on the second dice is different than rolling 2 on
+the first dice and 4 on the second dice. Thus, we are dealing with
+\textbf{permutations}.
+
+Next, we need to know whether repitition is allowed or not. Since we can
+pick, for example, 2 on the first dice and 2 on the second dice as
+allowed, then \textbf{repitition is allowed}.
+
+Therefore, we can say that we are dealing with permutations with
+repitition allowed. Thus, there are \textbf{\(6^2 = 36\)} ways to roll
+the two dices.
+
+\subsubsection{\texorpdfstring{\textbf{Part 2: finding how many ways we
+can get the dices' sum equal to at most
+9}}{Part 2: finding how many ways we can get the dices' sum equal to at most 9}}\label{part-2-finding-how-many-ways-we-can-get-the-dices-sum-equal-to-at-most-9}
+
+Here, we can count those values individually. In the code below, when I
+write \((x_1,x_2)\), this just means that \(x_1\) is the outcome of the
+first dice while \(x_2\) is the outcome of the second dice. Thus, these
+are the ways we can roll the two dices where the sum of their values are
+less than or equal to 9:
+
+(1,1), (1,2), (1,3), (1,4), (1,5), (1,6)
+
+(2,1), (2,2), (2,3), (2,4), (2,5), (2,6)
+
+(3,1), (3,2), (3,3), (3,4), (3,5), (3,6)
+
+(4,1), (4,2), (4,3), (4,4), (4,5)
+
+(5,1), (5,2), (5,3), (5,4)
+
+(6,1), (6,2), (6,3)
+
+Thus, from the above list, there are \(30\) ways we can arrange the
+dices so that we can add them up to \(9\).
+
+\subsubsection{\texorpdfstring{\textbf{Part 3: Dividing the above two
+values
+together}}{Part 3: Dividing the above two values together}}\label{part-3-dividing-the-above-two-values-together}
+
+Now, we just divide 30 over 36 to get the probability that if I roll two
+6-sided dice they add up to \textbf{at most} \(9\) : \[\frac{30}{36}\]
+
+    1b Answer Check). To check your final answer to 1b, enter the answer you
+came up with (just the number) in the cell below. Note that this is just
+a built-in public test so you can check your work and determine if you
+are on the right track. To receive credit on this problem you must show
+all steps in part 1b above using LaTeX and fully justifying your answer
+using correct mathematical notation.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{q1b\PYZus{}answer} \PY{o}{=} \PY{l+m+mi}{30}\PY{o}{/} \PY{l+m+mi}{36} 
+
+\PY{c+c1}{\PYZsh{}6 6 6 5 4 3}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{q1b\PYZus{}answer}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.8333333333333334
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{q1bcheck}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+q1bcheck results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \paragraph{Question 1c)}\label{question-1c}
+
+Suppose you uncharacteristically show up to a quiz completely
+unprepared. The quiz has 10 questions, each with 5 multiple choice
+options. You decide to guess each answer in a completely random way.
+What is the probability that you get exactly 3 questions correct? Use
+Markdown and LaTeX (not code) in the cell directly below to show all of
+your steps and fully justify your answer.
+
+    \subsubsection{\texorpdfstring{\textbf{Part 1: Finding what method we
+can use to solve this
+problem}}{Part 1: Finding what method we can use to solve this problem}}\label{part-1-finding-what-method-we-can-use-to-solve-this-problem}
+
+Since we are dealing with only two values: either you get the answer
+correct or you do not, we will be using the Bernoulli distribution
+equation in order to calculate this probability.
+
+\subsubsection{\texorpdfstring{\textbf{Part 2: Using the Bernoulli
+distribution
+equation}}{Part 2: Using the Bernoulli distribution equation}}\label{part-2-using-the-bernoulli-distribution-equation}
+
+Now, we start our calculations. First, we need to find our \(p\) value
+which could be found easily. Since there is four incorrect answers out
+of the 5 multiple choice questions, the probability that you will answer
+a question incorrectly is \(p = \frac{4}{5}\), which means that the
+probability that you will get the answer correctly (if you guess
+ofcourse) is: \(1 -p = \frac{1}{5}.\)
+
+Now that we have our \(p\) value, and since we know our \(k\) in this
+case (\(k = 7\) since we are getting 7 incorrect questions and 3 correct
+answers), we can do the following: \[
+\begin{align*}
+    P(x)  &= \binom{n}{x} \cdot p^x (1-p)^{n - x} && \text{Initial equation} \\
+    &= \binom{10}{7} \cdot (\frac{4}{5}) ^{7} \cdot (\frac{1}{5})^{3} && \text{Plugging in the values with $x = 7$ and $p = \frac{4}{5}$ and $n = 10$ (total number of questions)} \\
+    &= \frac{10!}{7! \cdot (3!)} \cdot (\frac{4}{5}) ^{7} \cdot (\frac{1}{5})^{3} && \text{simplify} \\
+    &= \frac{8 \cdot 9 \cdot 10}{3!} \cdot (\frac{4}{5}) ^{7} \cdot (\frac{1}{5})^{3} && \text{simplify} \\
+    &= 0.2013265900 ... && \text{Final Answer}
+\end{align*}
+\]
+
+Therefore, the probability that you will get 3 correct answers out of
+the 10 multiple-choice questions with 5 options each is
+\(0.2013265900 ...\)
+
+    1c Final Answer Check). To check your final answer to 1c, enter the
+final answer you came up with in the cell below. Do not round your
+answer. Note that this is just a built-in public test so you can check
+your work and determine if you are on the right track. To receive credit
+on this problem you must show all steps in part 1c above using LaTeX and
+fully justifying your answer using correct mathematical notation.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{q1c\PYZus{}answer} \PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{l+m+mi}{4}\PY{o}{/}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{l+m+mi}{8} \PY{o}{*} \PY{l+m+mi}{9} \PY{o}{*} \PY{l+m+mi}{10}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{6}\PY{p}{)}  \PY{c+c1}{\PYZsh{}ways of getting 3 correct answers / ways of answering the questions}
+
+\PY{c+c1}{\PYZsh{}i think the 120 is correct but i also  think that the denominator is not correct because i have to do a summation of all values}
+\PY{n+nb}{print} \PY{p}{(}\PY{n}{q1c\PYZus{}answer}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.2013265920000001
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{q1ccheck}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+q1ccheck results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hyperref[top]{Back to top}
+
+\subsection{\texorpdfstring{ Question 2: Prerequisites: Calculus
+Review}{ Question 2: Prerequisites: Calculus Review}}\label{question-2-prerequisites-calculus-review}
+
+You will need a solid understanding of the following concepts from
+Calculus 1 and 2 to succeed in this course. See the
+\href{https://canvas.colorado.edu/courses/101142/pages/prerequisite-review-calculus-and-discrete-structures?module_item_id=5144193}{Prerequisite
+Review Resources} posted on Canvas if you need to review any of these
+key concepts.
+
+\subsubsection{Preliminary: Sums}\label{preliminary-sums}
+
+Here's a recap of some basic algebra written in sigma notation. The
+facts are all just applications of the ordinary associative and
+distributive properties of addition and multiplication, written
+compactly and without the possibly ambiguous ``\ldots{}''. But if you
+are ever unsure of whether you're working correctly with a sum, you can
+always try writing \(\sum_{i=1}^n a_i\) as \(a_1 + a_2 + \cdots + a_n\)
+and see if that helps.
+
+\begin{itemize}
+\tightlist
+\item
+  You can use any reasonable notation for the index over which you are
+  summing, just as in Python you can use any reasonable name in
+  \texttt{for\ name\ in\ list}. Thus
+  \(\sum_{i=1}^n a_i = \sum_{k=1}^n a_k\).
+\item
+  \(\sum_{i=1}^n (a_i + b_i) = \sum_{i=1}^n a_i + \sum_{i=1}^n b_i\)
+\item
+  \(\sum_{i=1}^n d = nd\)
+\item
+  \(\sum_{i=1}^n (ca_i + d) = c\sum_{i=1}^n a_i + nd\)
+\end{itemize}
+
+    \subsubsection{Question 2a)}\label{question-2a}
+
+We commonly use sigma notation to compactly write the definition of the
+arithmetic mean (commonly known as the average):
+
+\[\bar{x} = \frac{1}{n}\left(x_1+x_2+ ... + x_n \right) = \frac{1}{n}\sum_{i=1}^n x_i\]
+
+The \(i\)th \emph{deviation from average} is the difference
+\(x_i - \bar{x}\). Prove that the sum of all these deviations is 0 that
+is, prove that \(\sum_{i=1}^n (x_i - \bar{x}) = 0\) (write your full
+solution in the box directly below showing all steps and using LaTeX).
+
+    First, we will start with the equation written above and then we will
+move on from there:
+
+\[
+\begin{align*}
+    \sum_{i=1}^n (x_i - \bar{x})  &=  \sum_{i=1}^n (x_i) - \sum_{i=1}^n (\bar{x}) && \text{Expanding the summation} \\
+    &= n\bar{x} - n\bar{x} && \text{Since $\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i$ or $n\bar{x} = \sum_{i=1}^n x_i$ and for the second part: $\sum_{i=1}^n d = nd$ for any constant $d$ } \\
+    &= 0 && \text{simplify} 
+\end{align*}
+\]
+
+Thus, we have shown that \(\sum_{i=1}^n (x_i - \bar{x}) = 0\).
+
+    \subsubsection{Question 2b)}\label{question-2b}
+
+Let \(x_1, x_2, \ldots, x_n\) be a list of numbers. You can think of
+each index \(i\) as the label of a household, and the entry \(x_i\) as
+the annual income of Household \(i\).
+
+Consider the function \[f(c) = \frac{1}{n} \sum_{i=1}^n (x_i-c)^2\]
+
+In this scenario, suppose that our data points \(x_1, x_2, \ldots, x_n\)
+are fixed and that \(c\) is the only variable.
+
+Using calculus, determine the value of \(c\) that minimizes \(f(c)\).
+You must use calculus to justify that this is indeed a minimum, and not
+a maximum.
+
+    \subsection{\texorpdfstring{\textbf{First step: What this
+means}}{First step: What this means}}\label{first-step-what-this-means}
+
+First, we need to realize that in order to find value \(c\) that will
+minimize \(f(c)\), we need to realize that the derivative of \(f(c)\)
+and setting it to zero will give us the maximum/minimum point of the
+graph: \[f'(c) = 0\]
+
+\subsection{\texorpdfstring{\textbf{Second step: Solving for \(c\) in
+\(f'(c) = 0\):}}{Second step: Solving for c in f\textquotesingle(c) = 0:}}\label{second-step-solving-for-c-in-fc-0}
+
+First, we need to find the derivative of \(f(c)\) and setting it to
+zero:
+
+\[
+\begin{align*}
+    f(c)' &= \frac{dy}{dc}(\frac{1}{n} \sum_{i=1}^n (x_i-c)^2) && \text{Initialization} \\
+    &= \frac{dy}{dc}(\frac{1}{n} \sum_{i=1}^n (x_i^2 - 2x_ic + c^2)) && \text{Expanding} \\
+    &=  \frac{- 2}{n}\sum_{i=1}^n x_ic + \frac{1}{n}\sum_{i=1}^n 2c && \text{Finding the derivative} \\
+    &=  \frac{- 2}{n}\sum_{i=1}^n x_i + \frac{1}{n} \cdot 2cn && \text{Continuing finding the derivative and evaluating the second summation} \\
+    &=  -2\bar{x} + \frac{1}{n} \cdot 2cn && \text{Evaluating the first summation. Note: $\bar{x} = \frac{1}{n}\left(x_1+x_2+ ... + x_n \right) = \frac{1}{n}\sum_{i=1}^n x_i$ where $\bar{x}$ is the average} \\
+     &=  -2\bar{x} + 2c = 0 && \text{Simplifying and setting the derivative to zero} \\
+\end{align*}
+\]
+
+Now, let's solve for \(c\):
+
+\[
+-2\bar{x} + 2c = 0
+\]
+
+\[
+2c = 2\bar{x}
+\]
+
+\[
+c = \bar{x}
+\]
+
+This means that the value that minimizes \(c\) is the average of the
+household income. We need to verify that this point is indeed the
+minimum point and not the maximum.
+
+\[f'(c) = -2\bar{x} + 2c\]
+
+To prove that this is indeed a minimum, we need to verify that the
+derivative before \(c = \bar{x}\) is negative and the derivative after
+\(c = \bar{x}\) is positive. This is because that a minimum point always
+have the derivative right before the point being negative derivative and
+the derivative right being after the point is positive. Assuming that
+\(\bar{x}\) is positive, let's pick a number that is less than that, say
+\(c = -1\):
+
+\[f'(-1) = -2\bar{x} -2\]
+
+Thus, we have shown that the derivative before \(c = \bar{x}\). Let's
+show that the derivative after \(c = \bar{x}\) is positive. Let's pick
+\(c = \bar{x} + 1\) since it is bigger than \(c = \bar{x}\):
+
+\[f'(\bar{x} + 1) = -2\bar{x} +2(\bar{x} + 1)\]
+
+\[f'(\bar{x} + 1) = -2\bar{x} + 2\bar{x} + 2\]
+
+\[f'(\bar{x} + 1) =  2\]
+
+Thus, we have shown that the derivative after \(c = \bar{x}\) is
+positive. Since the derivative before \(c = \bar{x}\) is negative and
+after it being positive, then it is verified that \(c = \bar{x}\) is the
+value that minimizes \(f(c)\) (it is the minimum point).
+
+    \hyperref[top]{Back to top}
+
+\subsection{\texorpdfstring{ Question 3). Applying Those Prereqs: A
+Maximum Likelihood
+Estimate}{ Question 3). Applying Those Prereqs: A Maximum Likelihood Estimate}}\label{question-3.-applying-those-prereqs-a-maximum-likelihood-estimate}
+
+    In this problem we're going to apply your calculus and discrete math
+prerequisite knowledge to introduce a data science concept called a
+maximum likelihood estimate.
+
+Data scientists use coin tossing as a visual image for sampling at
+random with replacement from a binary population.
+
+\subsubsection{Question 3a)}\label{question-3a}
+
+A coin that lands heads with chance 0.7 is tossed six times. What is the
+chance of the sequence HHHTHT? Assign your answer to the variable
+\texttt{p\_HHHTHT}.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p\PYZus{}HHHTHT} \PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.7}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{l+m+mf}{0.3}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\PY{n}{p\PYZus{}HHHTHT}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+0.021608999999999996
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{3a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+3a results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \subsubsection{Question 3b)}\label{question-3b}
+
+I have a coin that lands heads with an unknown probability \(p\).
+
+Suppose I toss it 10 times and get the sequence TTTHTHHTTH.
+
+If you toss this coin 10 times, the chance that you get the sequence
+above is a function of \(p\). That function is called the
+\emph{likelihood} of the sequence TTTHTHHTTH, so we will call it
+\(L(p)\).
+
+    What is \(L(p)\) (i.e.~the likelihood) for the sequence TTTHTHHTTH?
+
+Enter your answer below by setting the \texttt{likelihood} variable
+equal to the correct function.
+
+(For example \texttt{likelihood\ =\ sin(p)+2p}, althought that is
+definitely an incorrect answer!)
+
+Then run the code below to plot the likelihood function.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}At the top of the notebook we already imported a useful plotting module, matplotlib with alias plt}
+
+\PY{n}{p} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)} 
+\PY{c+c1}{\PYZsh{}This creates an array of 100 p\PYZhy{}values equally spaced between 0 and 1}
+
+\PY{n}{likelihood} \PY{o}{=} \PY{p}{(}\PY{n}{p}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{6}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}Define the likelihood function above}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{likelihood}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkblue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+\PY{c+c1}{\PYZsh{}This plots the likelihood function  }
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}p\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}This labels the x axis}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}L(p)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}This labels the y\PYZhy{}axis}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Likelihood of TTTHTHHTTH}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\PY{c+c1}{\PYZsh{}This titles the plot}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{hw02_files/hw02_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Question 3c)}\label{question-3c}
+
+The value \(\hat{p}\) at which the likelihood function attains its
+maximum is called the \emph{maximum likelihood estimate} (MLE) of \(p\).
+Among all values of \(p\), it is the one that makes the observed data
+most likely.
+
+Using only your plot above, what is the value of \(\hat{p}\)?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p\PYZus{}hat} \PY{o}{=} \PY{l+m+mf}{0.4}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{3c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+3c results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \subsubsection{Question 3d)}\label{question-3d}
+
+Notice the value you found graphically for \(\hat{p}\) above also
+intuitively makes sense because it is also the observed proportion of
+heads in the given sequence TTTHTHHTTH.
+
+Let's prove what you observed graphically above. That is, let's use
+calculus to find \(\hat{p}\).
+
+But \textbf{wait before you start trying to find the value \(p\) where
+\(L'(p)=0\) (trust us, the algebra is not pretty\ldots)}
+
+USEFUL TIP: The value \(\hat{p}\) at which the function \(L(p)\) attains
+its maximum is the same as the value at which the function \(\ln(L(p))\)
+attains its maximum.
+
+This tip is hugely important in data science because many probabilities
+are products and the natural log function \texttt{ln} function turns
+products into sums. It's \textbf{much simpler to take derivatives of a
+sum} than a product.
+
+Thus, to find the value \(p\) where \(L'(p)=0\): - Take the natural log
+\texttt{ln} of L(p) - Use properties of logs to rewrite products in
+\texttt{ln(L(p))} as sums - Take the derivative of this rewritten
+version of \texttt{ln(L(p))} - Solve \texttt{ln(L(p))=0} for p - You
+should get the same answer that you found graphically above.
+
+You don't have to check that the value you've found produces a max and
+not a min -- we'll spare you that step.
+
+Show all steps in the cell below using Markdown and LaTeX
+
+    \subsection{\texorpdfstring{\textbf{Solution:}}{Solution:}}\label{solution}
+
+From the above information, it is said that
+\(L'(p) = \frac{dy}{dp} ln(L(P)) = 0\)
+
+Thus, let's begin by taking the natural log of the function:
+
+\[
+\begin{align*}
+    ln(L(p))  &=  ln((p^4) \cdot (1-p) ^ 6) && \text{Expanding} \\
+    &= ln(p^4) + ln((1-p) ^ 6) && \text{since $\log(ab) = \log(a) + \log(b)$} \\
+    &= 4\cdot ln(p) + 6\cdot ln(1-p) && \text{simplify} 
+\end{align*}
+\]
+
+Now that we took the natural log of the function, we can find the
+derivative of this function and set it to zero:
+
+\[
+\begin{align*}
+    \frac{dy}{dp}(4\cdot ln(p) + 6\cdot ln(1-p))  &=  \frac{4}{p} - \frac{6}{1-p} && \text{Finding the derivative. Note that we used $u = 1 - p$ for the second part when deriving} 
+\end{align*}
+\]
+
+Set it to zero and solve for \(p\):
+
+\[
+\frac{4}{p} - \frac{6}{1-p} = 0
+\]
+
+\[
+\frac{4}{p} = \frac{6}{1-p}
+\]
+
+\[
+6p = 4 \cdot (1- p)
+\]
+
+\[
+6p = 4 - 4p
+\]
+
+\[
+10p = 4
+\]
+
+\[
+p = \frac{4}{10} = 0.4
+\]
+
+Thus, we have verified that \(\hat{p} = 0.4\).
+
+    \hyperref[top]{Back to top}
+
+\subsection{\texorpdfstring{ QUESTION 4: Evidence for Money
+Ball}{ QUESTION 4: Evidence for Money Ball}}\label{question-4-evidence-for-money-ball}
+
+In the book \href{https://en.wikipedia.org/wiki/Moneyball}{MoneyBall},
+Michael Lewis documented the introduction of statistics and data science
+in selecting players for the Oakland A's. in this problem, we're going
+to use two datasets from the \href{http://seanlahman.com/}{Sean Lahman's
+Baseball Database} which contains the ``complete batting and pitching
+statistics from 1871 to 2022, plus fielding statistics, standings, team
+stats, managerial records, post-season data, and more.''
+
+For more details about this data, see documentation.txt in the
+\texttt{data} folder.
+
+    \subsection{Exploratory Data Analysis}\label{exploratory-data-analysis}
+
+Throughout this question you will be asked to explore the dataset.\\
+You will need familiarity with all the methods and attributes introduced
+in Chapter 6 of the assigned reading (and Lessons 2 and 3 of Lecture):
+\href{https://learningds.org/ch/06/pandas_intro.html}{Learning Data
+Science Chapter 6 - All (Subsetting, Aggregating, Joining,
+Transforming)}.
+
+There is frequently more than one way to answer question in Pandas, so
+we encourage you to dive in and play around with different approaches.
+Unless otherwise indicated, you are welcome to use whatever
+methods/attributes/approach that you choose.
+
+    There are two .csv files in the \texttt{data} folder of this HW
+assignment: \texttt{teams.csv} and \texttt{salaries.csv}
+
+Import the \texttt{Teams.csv} data into a DataFrame called
+\texttt{teams\_df} and take a look at the data.
+
+Import the \texttt{Salaries.csv} data into a DataFrame called
+\texttt{salaries\_df} and take a look at the data.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{teams\PYZus{}df}\PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/Teams.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{teams\PYZus{}df}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+      yearID lgID teamID franchID divID  Rank    G  Ghome   W    L  {\ldots}   DP  \textbackslash{}
+0       1871  NaN    BS1      BNA   NaN     3   31    NaN  20   10  {\ldots}   24
+1       1871  NaN    CH1      CNA   NaN     2   28    NaN  19    9  {\ldots}   16
+2       1871  NaN    CL1      CFC   NaN     8   29    NaN  10   19  {\ldots}   15
+3       1871  NaN    FW1      KEK   NaN     7   19    NaN   7   12  {\ldots}    8
+4       1871  NaN    NY2      NNA   NaN     5   33    NaN  16   17  {\ldots}   14
+{\ldots}      {\ldots}  {\ldots}    {\ldots}      {\ldots}   {\ldots}   {\ldots}  {\ldots}    {\ldots}  ..  {\ldots}  {\ldots}  {\ldots}
+3010    2022   NL    SLN      STL     C     1  162   81.0  93   69  {\ldots}  181
+3011    2022   AL    TBA      TBD     E     1  162   81.0  86   76  {\ldots}  110
+3012    2022   AL    TEX      TEX     W     4  162   81.0  68   94  {\ldots}  143
+3013    2022   AL    TOR      TOR     E     2  162   81.0  92   70  {\ldots}  120
+3014    2022   NL    WAS      WSN     E     5  162   81.0  55  107  {\ldots}  126
+
+         FP                     name                          park  \textbackslash{}
+0     0.834     Boston Red Stockings           South End Grounds I
+1     0.829  Chicago White Stockings       Union Base-Ball Grounds
+2     0.818   Cleveland Forest Citys  National Association Grounds
+3     0.803     Fort Wayne Kekiongas                Hamilton Field
+4     0.840         New York Mutuals      Union Grounds (Brooklyn)
+{\ldots}     {\ldots}                      {\ldots}                           {\ldots}
+3010  0.989      St. Louis Cardinals             Busch Stadium III
+3011  0.985           Tampa Bay Rays               Tropicana Field
+3012  0.984            Texas Rangers              Globe Life Field
+3013  0.986        Toronto Blue Jays                 Rogers Centre
+3014  0.982     Washington Nationals                Nationals Park
+
+      attendance  BPF  PPF  teamIDBR  teamIDlahman45  teamIDretro
+0            NaN  103   98       BOS             BS1          BS1
+1            NaN  104  102       CHI             CH1          CH1
+2            NaN   96  100       CLE             CL1          CL1
+3            NaN  101  107       KEK             FW1          FW1
+4            NaN   90   88       NYU             NY2          NY2
+{\ldots}          {\ldots}  {\ldots}  {\ldots}       {\ldots}             {\ldots}          {\ldots}
+3010   3320551.0   94   94       STL             SLN          SLN
+3011   1128127.0   95   93       TBR             TBA          TBA
+3012   2011361.0  100  101       TEX             TEX          TEX
+3013   2653830.0  100  100       TOR             TOR          TOR
+3014   2026401.0   94   96       WSN             MON          WAS
+
+[3015 rows x 48 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{salaries\PYZus{}df}\PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/Salaries.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{salaries\PYZus{}df}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+       yearID teamID lgID   playerID    salary
+0        1985    ATL   NL  barkele01    870000
+1        1985    ATL   NL  bedrost01    550000
+2        1985    ATL   NL  benedbr01    545000
+3        1985    ATL   NL   campri01    633333
+4        1985    ATL   NL  ceronri01    625000
+{\ldots}       {\ldots}    {\ldots}  {\ldots}        {\ldots}       {\ldots}
+26423    2016    WAS   NL  strasst01  10400000
+26424    2016    WAS   NL  taylomi02    524000
+26425    2016    WAS   NL  treinbl01    524900
+26426    2016    WAS   NL  werthja01  21733615
+26427    2016    WAS   NL  zimmery01  14000000
+
+[26428 rows x 5 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \subsubsection{Question 4a). EDA: Structure, Granularity and
+Faithfulness}\label{question-4a.-eda-structure-granularity-and-faithfulness}
+
+Examine the structure, granularity and faithfulness of the datasets.
+(Hint: The common utility functions we covered in lecture will be useful
+here).
+
+Then answer the following questions:
+
+\begin{itemize}
+\item
+  i). What does the column \texttt{G} represent in the teams dataset?
+  (For a description of the columns, see the documentation in the
+  \texttt{data} folder).
+\item
+  ii). What is the granularity of the \texttt{teams.csv} file?
+\item
+  iii). What is the granularity of the \texttt{salary.csv} file?
+\item
+  iv). How many rows and columns are in the teams dataset? Assign your
+  answer to the variables \texttt{team\_rows} and \texttt{team\_col}
+  below.
+\item
+  v). How many rows and columns are in the salary dataset? Assign your
+  answer to the variables \texttt{salary\_rows} and \texttt{salary\_col}
+  below.
+\item
+  vi). How many entries in the \texttt{teams.csv} file are missing
+  Attendance Data? Assign your answer to the variable
+  \texttt{missing\_attendance} below.
+\end{itemize}
+
+    \subsubsection{Answer Cell for Questions
+4a(i)(ii)(iii)}\label{answer-cell-for-questions-4aiiiiii}
+
+In this cell, answer questions 4a(i) - (iii) using Markdown (not code).
+
+\textbf{4a(i) Answer:}
+
+According to the documentation, ``G'' represents the games played by
+that team during that year.
+
+\textbf{4a(ii) Answer}:
+
+Basically, each row represents the relevant data every year for each
+team in the baseball league since 1871 until 2022, and this data
+includes the wins, games played, earned run average, and so much more.
+
+\textbf{4a(iii) Answer}:
+
+In here, the salary data shows the salaries of each player for every
+team in the baseball league for every year from 1985 till 2016
+
+In the code cells below justify your answers to part (ii) and (iii) and
+then answer parts iv through vi
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{teams\PYZus{}df}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Rank}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{first}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} as you can see, we have shown the number one team in the league since 1871 till 2022 using sort value and groupby}
+
+\PY{c+c1}{\PYZsh{} Show work in this cell justifying your answer to part 4a(ii) (hint: either use .value\PYZus{}counts() or .groupby)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+        lgID teamID franchID divID  Rank    G  Ghome    W   L DivWin  {\ldots}  \textbackslash{}
+yearID                                                                {\ldots}
+1871    None    PH1      PNA  None     1   28    NaN   21   7   None  {\ldots}
+1872    None    BS1      BNA  None     1   48    NaN   39   8   None  {\ldots}
+1873    None    BS1      BNA  None     1   60    NaN   43  16   None  {\ldots}
+1874    None    BS1      BNA  None     1   71    NaN   52  18   None  {\ldots}
+1875    None    BS1      BNA  None     1   82    NaN   71   8   None  {\ldots}
+{\ldots}      {\ldots}    {\ldots}      {\ldots}   {\ldots}   {\ldots}  {\ldots}    {\ldots}  {\ldots}  ..    {\ldots}  {\ldots}
+2018      NL    MIL      MIL     C     1  163   81.0   96  67      Y  {\ldots}
+2019      NL    SLN      STL     C     1  162   81.0   91  71      Y  {\ldots}
+2020      AL    TBA      TBD     E     1   60   29.0   40  20      Y  {\ldots}
+2021      AL    TBA      TBD     E     1  162   81.0  100  62      Y  {\ldots}
+2022      NL    ATL      ATL     E     1  162   81.0  101  61      Y  {\ldots}
+
+         DP     FP                    name                      park  \textbackslash{}
+yearID
+1871     13  0.845  Philadelphia Athletics  Jefferson Street Grounds
+1872     44  0.875    Boston Red Stockings       South End Grounds I
+1873     54  0.836    Boston Red Stockings       South End Grounds I
+1874     53  0.850    Boston Red Stockings       South End Grounds I
+1875     56  0.870    Boston Red Stockings       South End Grounds I
+{\ldots}     {\ldots}    {\ldots}                     {\ldots}                       {\ldots}
+2018    141  0.982       Milwaukee Brewers               Miller Park
+2019    168  0.989     St. Louis Cardinals         Busch Stadium III
+2020     52  0.985          Tampa Bay Rays           Tropicana Field
+2021    130  0.986          Tampa Bay Rays           Tropicana Field
+2022    110  0.987          Atlanta Braves             SunTrust Park
+
+        attendance  BPF  PPF  teamIDBR  teamIDlahman45  teamIDretro
+yearID
+1871           NaN  102   98       ATH             PH1          PH1
+1872           NaN  105  100       BOS             BS1          BS1
+1873           NaN  106  100       BOS             BS1          BS1
+1874           NaN  105   98       BOS             BS1          BS1
+1875           NaN  103   96       BOS             BS1          BS1
+{\ldots}            {\ldots}  {\ldots}  {\ldots}       {\ldots}             {\ldots}          {\ldots}
+2018     2850875.0  102  101       MIL             ML4          MIL
+2019     3480393.0   98   97       STL             SLN          SLN
+2020           0.0   96   95       TBR             TBA          TBA
+2021      761072.0   92   91       TBR             TBA          TBA
+2022     3129931.0  102  100       ATL             ATL          ATL
+
+[152 rows x 47 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{salaries\PYZus{}df}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{salary}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ascending} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{first}\PY{p}{(}\PY{p}{)} 
+
+\PY{c+c1}{\PYZsh{}as you can see, for example, we have shown the highest paid baseball player in the league for each year since 1985 till 2016}
+
+\PY{c+c1}{\PYZsh{} Show work in this cell justifying your answer to part 4a(iii) (hint: either use .value\PYZus{}counts() or .groupby)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+       teamID lgID   playerID    salary
+yearID
+1985      PHI   NL  schmimi01   2130300
+1986      NYN   NL  fostege01   2800000
+1987      PHI   NL  schmimi01   2127333
+1988      SLN   NL  smithoz01   2340000
+1989      LAN   NL  hershor01   2766667
+1990      ML4   AL  yountro01   3200000
+1991      LAN   NL  strawda01   3800000
+1992      NYN   NL  bonilbo01   6100000
+1993      NYN   NL  bonilbo01   6200000
+1994      NYN   NL  bonilbo01   6300000
+1995      DET   AL  fieldce01   9237500
+1996      DET   AL  fieldce01   9237500
+1997      CHA   AL  belleal01  10000000
+1998      FLO   NL  sheffga01  14936667
+1999      BAL   AL  belleal01  11949794
+2000      LAN   NL  brownke01  15714286
+2001      TEX   AL  rodrial01  22000000
+2002      TEX   AL  rodrial01  22000000
+2003      TEX   AL  rodrial01  22000000
+2004      BOS   AL  ramirma02  22500000
+2005      NYA   AL  rodrial01  26000000
+2006      NYA   AL  rodrial01  21680727
+2007      NYA   AL  giambja01  23428571
+2008      NYA   AL  rodrial01  28000000
+2009      NYA   AL  rodrial01  33000000
+2010      NYA   AL  rodrial01  33000000
+2011      NYA   AL  rodrial01  32000000
+2012      NYA   AL  rodrial01  30000000
+2013      NYA   AL  rodrial01  29000000
+2014      LAN   NL  greinza01  26000000
+2015      LAN   NL  kershcl01  32571000
+2016      LAN   NL  kershcl01  33000000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Solution Cell for 4a(iv) and 4a(v)}
+\PY{c+c1}{\PYZsh{}Use code to find the number of rows and columns in the teams data.  Do not enter any values by hand.}
+
+\PY{n}{team\PYZus{}rows}\PY{o}{=} \PY{n}{teams\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+
+\PY{n}{team\PYZus{}col} \PY{o}{=} \PY{n}{teams\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+
+\PY{n}{salary\PYZus{}rows} \PY{o}{=} \PY{n}{salaries\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+
+\PY{n}{salary\PYZus{}col} \PY{o}{=} \PY{n}{salaries\PYZus{}df}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Solution Cell for 4a(vi)}
+\PY{c+c1}{\PYZsh{} Use code to find the number of rows in the Teams data that are missing attendance data}
+
+\PY{n}{missing\PYZus{}attendance} \PY{o}{=} \PY{n}{teams\PYZus{}df}\PY{p}{[}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{teams\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{attendance}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{q4a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+q4a results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \subsubsection{Question 4b) EDA: Examining Scope and Temporality of the
+Data}\label{question-4b-eda-examining-scope-and-temporality-of-the-data}
+
+Use code to explore the datasets and answer the questions below:
+
+i). How many unique teams are represented in the \texttt{teams\_df}
+DataFrame? Write code to calculate this and assign the answer to the
+variable \texttt{unique\_teams}
+
+ii). How many unique teams are represented in the \texttt{salaries\_df}
+DataFrame? Write code to calculate this and assign the answer to
+\texttt{unique\_teams\_salary}
+
+iii). What years does the \texttt{teams\_df} data span?\\
+Write code to calculate this and assign the answers to
+\texttt{teams\_startyear} and \texttt{teams\_endyear}
+
+iv). What years does the \texttt{salaries\_df} data span?\\
+Write code to calculate this and assign the answers to
+\texttt{salaries\_startyear} and \texttt{salaries\_endyear}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{unique\PYZus{}teams} \PY{o}{=} \PY{n}{teams\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{teamID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{size}
+
+\PY{c+c1}{\PYZsh{}print out result}
+\PY{n}{unique\PYZus{}teams}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+149
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{unique\PYZus{}teams\PYZus{}salary}\PY{o}{=} \PY{n}{salaries\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{teamID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{size}
+
+\PY{c+c1}{\PYZsh{}print out result}
+\PY{n}{unique\PYZus{}teams\PYZus{}salary}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+35
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{teams\PYZus{}startyear} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{teams\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{teams\PYZus{}endyear} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{teams\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}print out result}
+\PY{p}{[}\PY{n}{teams\PYZus{}startyear}\PY{p}{,} \PY{n}{teams\PYZus{}endyear}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[1871, 2022]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{salaries\PYZus{}startyear} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{salaries\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{salaries\PYZus{}endyear} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{salaries\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}print out result}
+\PY{p}{[}\PY{n}{salaries\PYZus{}startyear}\PY{p}{,} \PY{n}{salaries\PYZus{}endyear}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[1985, 2016]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{q4b}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+q4b results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \subsubsection{Question 4c:}\label{question-4c}
+
+If you haven't already, \textbf{read the assigned textbook readings}
+\href{https://learningds.org/ch/06/pandas_subsetting.html\#filtering-rows}{on
+Filtering} \href{https://learningds.org/ch/06/pandas_subsetting.html}{on
+Extracting Data} and
+\href{https://learningds.org/ch/06/pandas_transforming.html}{on
+Transforming Data}
+
+\begin{itemize}
+\item
+  i ). For the data science approach used by the Oakland A's team in
+  2002, they used historical baseball data starting in 1998. Filter the
+  \texttt{teams\_df} to create a new dataframe
+  \texttt{teams\_df\_moneyball} with index \texttt{teamID} and columns
+  \texttt{teamID}, \texttt{yearID}, \texttt{name}, \texttt{G},
+  \texttt{W}. The new dataframe should only include records where the
+  year is greater than or equal to 1998.
+\item
+  ii). Add a new column called \texttt{winFrac} to the dataframe
+  \texttt{teams\_df\_moneyball} that calculates the number of Wins
+  divided by the number of Games for a given team in a given year,
+  \textbf{rounded to the nearest hundredth}. (Hint: Don't use any for
+  loops).
+\item
+  iii). Use an appropriate extraction operator to determine the Oakland
+  A's (``OAK'') fraction of wins in the year 1998 (i.e.~write code below
+  that selects this value from the \texttt{teams\_df\_moneyball} table)
+  and assign it to the variable \texttt{winFrac\_OAK\_98}.
+\end{itemize}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Create teams\PYZus{}df\PYZus{}moneyball dataframe}
+
+
+\PY{n}{teams\PYZus{}df\PYZus{}moneyball} \PY{o}{=} \PY{n}{teams\PYZus{}df}\PY{p}{[}\PY{p}{(}\PY{n}{teams\PYZus{}df}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{1998}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{teamID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{name}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{G}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{teamID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{teams\PYZus{}df\PYZus{}moneyball}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+        yearID                  name    G    W
+teamID
+ANA       1998        Anaheim Angels  162   85
+ARI       1998  Arizona Diamondbacks  162   65
+ATL       1998        Atlanta Braves  162  106
+BAL       1998     Baltimore Orioles  162   79
+BOS       1998        Boston Red Sox  162   92
+{\ldots}        {\ldots}                   {\ldots}  {\ldots}  {\ldots}
+SLN       2022   St. Louis Cardinals  162   93
+TBA       2022        Tampa Bay Rays  162   86
+TEX       2022         Texas Rangers  162   68
+TOR       2022     Toronto Blue Jays  162   92
+WAS       2022  Washington Nationals  162   55
+
+[750 rows x 4 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Add column called winFrac to the dataframe}
+
+
+\PY{n}{teams\PYZus{}df\PYZus{}moneyball} \PY{o}{=} \PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{o}{.}\PY{n}{assign}\PY{p}{(}\PY{n}{winFrac} \PY{o}{=} \PY{n+nb}{round}\PY{p}{(}\PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{W}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{/}\PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{G}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+
+
+
+\PY{c+c1}{\PYZsh{} Print out resulting DataFrame}
+\PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+        yearID                  name    G    W  winFrac
+teamID
+ANA       1998        Anaheim Angels  162   85     0.52
+ARI       1998  Arizona Diamondbacks  162   65     0.40
+ATL       1998        Atlanta Braves  162  106     0.65
+BAL       1998     Baltimore Orioles  162   79     0.49
+BOS       1998        Boston Red Sox  162   92     0.57
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Answer to part 4ci:}
+
+\PY{n}{winFrac\PYZus{}OAK\PYZus{}98}\PY{o}{=} \PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{p}{[}\PY{p}{(}\PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1998}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{OAK}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{winFrac}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+
+\PY{n}{winFrac\PYZus{}OAK\PYZus{}98}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+0.46
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{grader}\PY{o}{.}\PY{n}{check}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{q4c}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+q4c results: All test cases passed!
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \subsubsection{EDA: Visualizing Data}\label{eda-visualizing-data}
+
+Let's examine how winFrac has varied over time for the Oakland A's.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}The code below uses the module plotlyexpress, which we imported at the top of the notebook using alias px}
+\PY{c+c1}{\PYZsh{}Read the code below to see how to use this function, then run this cell}
+
+\PY{n}{px}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{OAK}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{winFrac}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    
+    
+Let's compare Oakland's winFrac to 2 other teams:  Boston Red Sox and the New York Yankees:
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}Read the entries below to see how to create this plot:}
+\PY{c+c1}{\PYZsh{}Then run this cell}
+
+\PY{n}{px}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{teams\PYZus{}df\PYZus{}moneyball}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{OAK}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NYA}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{BOS}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}\PY{p}{,}\PY{n}{x}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{yearID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{winFrac}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{facet\PYZus{}col} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/abdullah/Library/Python/3.9/lib/python/site-
+packages/plotly/express/\_core.py:2065: FutureWarning:
+
+When grouping with a length-1 list-like, you will need to pass a length-1 tuple
+to get\_group in a future version of pandas. Pass `(name,)` instead of `name` to
+silence this warning.
+
+    \end{Verbatim}
+
+    
+    
+    \textbf{Observations:} In the cell below write down at least 3
+observations you can make from these plots.
+
+    First, I noticed that OAK peaked in terms of win fraction around 2022
+but since then it has been decreasing generally.
+
+Also, I noticed that New York Yankess preserved their win fraction
+throughout the time period shown which means that its performance has
+been stable.
+
+Lastly, we have Boston Red Sox that also preserved its win frac
+although, very slowly, its win frac began to decrease in the last few
+years.
+
+    \textbf{Payrolls Per Team} An interesting part of this story also takes
+into account the salary differences between players on these teams.
+We'll examine this further in lecture and in our TA-led discussion!
+
+    \subsection{Congratulations! You have finished Homework
+2!}\label{congratulations-you-have-finished-homework-2}
+
+    If you discussed this assignment with any other students in the class
+(in a manner that is acceptable as described by the Collaboration policy
+above) please \textbf{include their names} here:
+
+\textbf{Collaborators}: \emph{list collaborators here}
+
+    If while completing this assignment you reference any websites other
+than those linked in this assignment or provided on Canvas please list
+those references here:
+
+\textbf{External references}: \emph{list any websites you referenced}
+
+    \subsubsection{Submission Instructions}\label{submission-instructions}
+
+Before proceeding any further, \textbf{save this notebook.}
+
+After running the \texttt{grader.export()} cell provided below,
+\textbf{2 files will be created}: a zip file and pdf file. You can
+download them using the links provided below OR by finding them in the
+same folder where this juptyer notebook resides in your JuptyerHub.
+
+To receive credit on this assignment, \textbf{you must submit BOTH of
+these files to their respective Gradescope portals:}
+
+\begin{itemize}
+\item
+  \textbf{Homework 2 Autograded}: Submit the zip file that is output by
+  the \texttt{grader.export()} cell below to the HW2 Autograded
+  assignment in Gradescope.
+\item
+  \textbf{Homework 2 Manually Graded}: Submit your hw02.PDF to the HW2
+  Manually Graded assignment in Gradescope. \textbf{It is your
+  responsibility to fully review your PDF file before submitting and
+  make sure that all your lines of code are visible and any LaTeX has
+  correctly compiled and is fully viewable.} \textbf{YOU MUST SELECT THE
+  PAGES CORRESPONDING TO EACH QUESTION WHEN YOU UPLOAD TO GRADESCOPE.}
+  If not, you will lose points.
+\end{itemize}
+
+\textbf{TROUBLESHOOTING TIPS} If you are having any issues compiling
+your assignment, please
+\href{https://docs.google.com/document/d/1ndr3Wj1PSF5qzlLMaBJznwh6QGeEXjd5TAJ6nf9EJvo/edit?usp=sharing}{read
+through these troubleshooting tips first}, then post any questions on
+Piazza.
+
+\textbf{You are responsible for ensuring your submission follows our
+requirements. We will not be granting regrade requests nor extensions to
+submissions that don't follow instructions.} If you encounter any
+difficulties with submission, please don't hesitate to reach out to
+staff prior to the deadline.
+
+    \subsection{Submission}\label{submission}
+
+Make sure you have run all cells in your notebook in order before
+running the cell below, so that all images/graphs appear in the output.
+The cell below will generate a zip file for you to submit.
+\textbf{Please save before exporting!}
+
+AFTER running the cell below, click on this link to download the PDF to
+upload to Gradescope. There will be a separate link that appears after
+running the cell below with a link to download the zip file to upload to
+Gradescope.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Save your notebook first, then run this cell to export your submission.}
+\PY{n}{grader}\PY{o}{.}\PY{n}{export}\PY{p}{(}\PY{n}{run\PYZus{}tests}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/abdullah/Library/Python/3.9/share/jupyter/nbconvert/templates/latex/displ
+ay\_priority.j2:32: UserWarning:
+
+Your element with mimetype(s) dict\_keys(['application/vnd.plotly.v1+json']) is
+not able to be represented.
+
+/Users/abdullah/Library/Python/3.9/lib/python/site-
+packages/otter/check/notebook.py:470: UserWarning:
+
+Could not locate a PDF to include
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}, frame=single, framerule=2mm, rulecolor=\color{outerrorbackground}]
+\textcolor{ansi-red}{---------------------------------------------------------------------------}
+\textcolor{ansi-red}{LatexFailed}                               Traceback (most recent call last)
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/export/exporters/via\_latex.py:66}, in \textcolor{ansi-cyan}{PDFViaLatexExporter.convert\_notebook}\textcolor{ansi-blue}{(cls, nb\_path, dest, xecjk, **kwargs)}
+\textcolor{ansi-green-intense}{\textbf{     64}}         output\_file\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}write(latex\_output[\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{0}])
+\textcolor{ansi-green}{---> 66} pdf\_output \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{nbconvert\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{export\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{pdf\_exporter\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{nb\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+\textcolor{ansi-green-intense}{\textbf{     67}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{with}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{open}(dest, \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{wb}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}) \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{as}} output\_file:
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/nbconvert/exporters/base.py:86}, in \textcolor{ansi-cyan}{export}\textcolor{ansi-blue}{(exporter, nb, **kw)}
+\textcolor{ansi-green-intense}{\textbf{     85}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{isinstance}(nb, NotebookNode):
+\textcolor{ansi-green}{---> 86}     output, resources \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{exporter\_instance\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{from\_notebook\_node\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{nb\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{resources\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+\textcolor{ansi-green-intense}{\textbf{     87}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{elif}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{isinstance}(nb, (\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{str},)):
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/nbconvert/exporters/pdf.py:197}, in \textcolor{ansi-cyan}{PDFExporter.from\_notebook\_node}\textcolor{ansi-blue}{(self, nb, resources, **kw)}
+\textcolor{ansi-green-intense}{\textbf{    196}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{self}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}log\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}info(\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{Building PDF}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"})
+\textcolor{ansi-green}{--> 197} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{self\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{run\_latex\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{tex\_file\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+\textcolor{ansi-green-intense}{\textbf{    198}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{self}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}run\_bib(tex\_file):
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/nbconvert/exporters/pdf.py:166}, in \textcolor{ansi-cyan}{PDFExporter.run\_latex}\textcolor{ansi-blue}{(self, filename, raise\_on\_failure)}
+\textcolor{ansi-green-intense}{\textbf{    164}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{self}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}log\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}critical(\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,135}}{\textbf{\%s}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{ failed: }\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,135}}{\textbf{\%s}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,0}}{\textbf{\textbackslash{}n}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,135}}{\textbf{\%s}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}, command[\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{0}], command, out)
+\textcolor{ansi-green}{--> 166} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{return}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{self\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{run\_command\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}
+\textcolor{ansi-green-intense}{\textbf{    167}} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{    \strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{self\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{latex\_command\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{filename\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{self\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{latex\_count\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{log\_error\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{raise\_on\_failure\strut}
+\textcolor{ansi-green-intense}{\textbf{    168}} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/nbconvert/exporters/pdf.py:156}, in \textcolor{ansi-cyan}{PDFExporter.run\_command}\textcolor{ansi-blue}{(self, command\_list, filename, count, log\_function, raise\_on\_failure)}
+\textcolor{ansi-green-intense}{\textbf{    155}}     msg \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{f}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{'}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{Failed to run }\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,135}}{\textbf{\{}}command\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,135}}{\textbf{\}}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{ command:}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,0}}{\textbf{\textbackslash{}n}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,135}}{\textbf{\{}}out\_str\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,135}}{\textbf{\}}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{'}
+\textcolor{ansi-green}{--> 156}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{raise}} raise\_on\_failure(msg)
+\textcolor{ansi-green-intense}{\textbf{    157}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{return}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{False}}  \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{95,135,135}}{\# failure}
+
+\textcolor{ansi-red}{LatexFailed}: PDF creating failed, captured latex output:
+Failed to run "['xelatex', 'notebook.tex', '-quiet']" command:
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex)
+ restricted \textbackslash{}write18 enabled.
+entering extended mode
+(./notebook.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/base/size10.clo))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics/keyval.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics/trig.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics-def/xetex.def)))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/caption/caption.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/caption/caption3.sty))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/float/float.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/xcolor/xcolor.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/tools/enumerate.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/geometry/geometry.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/generic/iftex/ifvtex.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/generic/iftex/iftex.sty)))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/base/textcomp.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/upquote/upquote.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/eurosym/eurosym.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/fontspec/fontspec.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/l3kernel/expl3.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/l3backend/l3backend-xetex.de
+f)))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/base/fontenc.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/unicode-math/unicode-math.st
+y
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/unicode-math/unicode-math-xe
+tex.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e
+.sty) (/usr/local/texlive/2023basic/texmf-dist/tex/latex/base/fix-cm.sty
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/unicode-math/unicode-math-ta
+ble.tex)))
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty)
+(/usr/local/texlive/2023basic/texmf-dist/tex/latex/grffile/grffile.sty)
+
+! LaTeX Error: File `adjustbox.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.80     \textbackslash{}adjustboxset
+                      \{max size=\{0.9\textbackslash{}linewidth\}\{0.9\textbackslash{}paperheight\}\}\^{}\^{}M
+No pages of output.
+Transcript written on notebook.log.
+
+
+During handling of the above exception, another exception occurred:
+
+\textcolor{ansi-red}{AttributeError}                            Traceback (most recent call last)
+Cell \textcolor{ansi-green}{In[38], line 2}
+\textcolor{ansi-green-intense}{\textbf{      1}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{95,135,135}}{\# Save your notebook first, then run this cell to export your submission.}
+\textcolor{ansi-green}{----> 2} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{grader\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{export\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{run\_tests\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{=\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{\textbf{True}\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/check/utils.py:184}, in \textcolor{ansi-cyan}{grading\_mode\_disabled}\textcolor{ansi-blue}{(wrapped, self, args, kwargs)}
+\textcolor{ansi-green-intense}{\textbf{    182}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{type}(\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{self})\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}\_grading\_mode:
+\textcolor{ansi-green-intense}{\textbf{    183}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{return}}
+\textcolor{ansi-green}{--> 184} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{return}} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{wrapped\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{args\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{kwargs\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/check/utils.py:166}, in \textcolor{ansi-cyan}{incompatible\_with.<locals>.incompatible}\textcolor{ansi-blue}{(wrapped, self, args, kwargs)}
+\textcolor{ansi-green-intense}{\textbf{    164}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{else}}:
+\textcolor{ansi-green-intense}{\textbf{    165}}         \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{return}}
+\textcolor{ansi-green}{--> 166} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{return}} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{wrapped\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{args\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{kwargs\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/check/utils.py:217}, in \textcolor{ansi-cyan}{logs\_event.<locals>.event\_logger}\textcolor{ansi-blue}{(wrapped, self, args, kwargs)}
+\textcolor{ansi-green-intense}{\textbf{    215}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{except}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{215,95,95}}{\textbf{Exception}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{as}} e:
+\textcolor{ansi-green-intense}{\textbf{    216}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{self}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}\_log\_event(event\_type, success\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{False}}, error\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=}e)
+\textcolor{ansi-green}{--> 217}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{raise}} e
+\textcolor{ansi-green-intense}{\textbf{    219}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} ret \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,255}}{\textbf{is}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{None}}:
+\textcolor{ansi-green-intense}{\textbf{    220}}     ret \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} LoggedEventReturnValue(\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{None}})
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/check/utils.py:213}, in \textcolor{ansi-cyan}{logs\_event.<locals>.event\_logger}\textcolor{ansi-blue}{(wrapped, self, args, kwargs)}
+\textcolor{ansi-green-intense}{\textbf{    208}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"""}
+\textcolor{ansi-green-intense}{\textbf{    209}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{Runs a method, catching any errors and logging the call. Returns the unwrapped return value}
+\textcolor{ansi-green-intense}{\textbf{    210}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{of the wrapped function.}
+\textcolor{ansi-green-intense}{\textbf{    211}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"""}
+\textcolor{ansi-green-intense}{\textbf{    212}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{try}}:
+\textcolor{ansi-green}{--> 213}     ret: Optional[LoggedEventReturnValue[T]] \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{wrapped\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{args\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{kwargs\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+\textcolor{ansi-green-intense}{\textbf{    215}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{except}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{215,95,95}}{\textbf{Exception}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{as}} e:
+\textcolor{ansi-green-intense}{\textbf{    216}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{self}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}\_log\_event(event\_type, success\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{False}}, error\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=}e)
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/check/notebook.py:525}, in \textcolor{ansi-cyan}{Notebook.export}\textcolor{ansi-blue}{(self, nb\_path, export\_path, pdf, filtering, pagebreaks, files, display\_link, force\_save, run\_tests)}
+\textcolor{ansi-green-intense}{\textbf{    523}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} pdf\_created \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,255}}{\textbf{or}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,255}}{\textbf{not}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{self}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}\_nbmeta\_config\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}require\_no\_pdf\_confirmation:
+\textcolor{ansi-green-intense}{\textbf{    524}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} pdf\_error \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,255}}{\textbf{is}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,255}}{\textbf{not}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{None}}:
+\textcolor{ansi-green}{--> 525}         \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{raise}} pdf\_error
+\textcolor{ansi-green-intense}{\textbf{    526}}     continue\_export()
+\textcolor{ansi-green-intense}{\textbf{    527}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{else}}:
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/check/notebook.py:462}, in \textcolor{ansi-cyan}{Notebook.export}\textcolor{ansi-blue}{(self, nb\_path, export\_path, pdf, filtering, pagebreaks, files, display\_link, force\_save, run\_tests)}
+\textcolor{ansi-green-intense}{\textbf{    460}} pdf\_path, pdf\_created, pdf\_error \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{None}}, \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{True}}, \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{None}}
+\textcolor{ansi-green-intense}{\textbf{    461}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} pdf:
+\textcolor{ansi-green}{--> 462}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{try}}: pdf\_path \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{export\_notebook\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{nb\_path\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{filtering\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{=\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{filtering\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{pagebreaks\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{=\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{pagebreaks\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+\textcolor{ansi-green-intense}{\textbf{    463}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{except}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{215,95,95}}{\textbf{Exception}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{as}} e: pdf\_error \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} e
+\textcolor{ansi-green-intense}{\textbf{    464}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{if}} pdf\_path \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,255}}{\textbf{and}} os\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}path\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}isfile(pdf\_path):
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/export/\_\_init\_\_.py:36}, in \textcolor{ansi-cyan}{export\_notebook}\textcolor{ansi-blue}{(nb\_path, dest, exporter\_type, **kwargs)}
+\textcolor{ansi-green-intense}{\textbf{     33}}     pdf\_name \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} os\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}path\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}splitext(nb\_path)[\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{0}] \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{+} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{.pdf}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}
+\textcolor{ansi-green-intense}{\textbf{     35}} Exporter \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} get\_exporter(exporter\_type\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=}exporter\_type)
+\textcolor{ansi-green}{---> 36} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{Exporter\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{convert\_notebook\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{(\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{nb\_path\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{pdf\_name\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{,\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{ \strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{*\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{kwargs\strut}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{)\strut}
+\textcolor{ansi-green-intense}{\textbf{     38}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{return}} pdf\_name
+
+File \textcolor{ansi-green}{\textasciitilde{}/Library/Python/3.9/lib/python/site-packages/otter/export/exporters/via\_latex.py:70}, in \textcolor{ansi-cyan}{PDFViaLatexExporter.convert\_notebook}\textcolor{ansi-blue}{(cls, nb\_path, dest, xecjk, **kwargs)}
+\textcolor{ansi-green-intense}{\textbf{     67}}     \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{with}} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{open}(dest, \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{wb}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}) \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{as}} output\_file:
+\textcolor{ansi-green-intense}{\textbf{     68}}         output\_file\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}write(pdf\_output[\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{0}])
+\textcolor{ansi-green}{---> 70} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{except}} \setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{nbconvert\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{.\strut}}\setlength{\fboxsep}{0pt}\colorbox{ansi-yellow}{pdf\strut}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}LatexFailed \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{0,135,0}}{\textbf{as}} error:
+\textcolor{ansi-green-intense}{\textbf{     71}}     message \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{There was an error generating your LaTeX; showing full error message:}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,95,0}}{\textbf{\textbackslash{}n}}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}
+\textcolor{ansi-green-intense}{\textbf{     72}}     message \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{+}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{=} indent(error\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{98,98,98}}{.}output, \def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"}\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{    }\def\tcRGB{\textcolor[RGB]}\expandafter\tcRGB\expandafter{\detokenize{175,0,0}}{"})
+
+\textcolor{ansi-red}{AttributeError}: module 'nbconvert' has no attribute 'pdf'
+    \end{Verbatim}
+
+    
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
