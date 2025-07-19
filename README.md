@@ -13,7 +13,7 @@ Welcome to the **Data Science Roadmap**! This repository tracks my journey and l
 
 ---
 
-## 📊 [Phase 2: Data Analysis & Visualization](https://github.com/your-username/data-science-phase-2)
+## 📊 [Phase 2: Data Analysis & Visualization](https://github.com/abo3abd-y/Data-Analysis-and-Visualization)
 
 ### ✅ Topics:
 - Data manipulation with **NumPy** and **Pandas**
