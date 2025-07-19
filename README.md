@@ -48,61 +48,49 @@ Welcome to the **Data Science Roadmap**! This repository tracks my journey and l
 
 ---
 
-## 🤖 [Phase 4: Specialized Topics](https://github.com/your-username/data-science-phase-4)
+## 🤖 Phase 4: Specialization Tracks
 
-### Choose your specialization track(s):
-
-#### 💬 Natural Language Processing (NLP)
-- Text preprocessing: tokenization, stemming, lemmatization
-- Sentiment analysis, topic modeling
-- Libraries: **spaCy**, **NLTK**, **Transformers**
-
-#### 🖼️ Computer Vision
-- Image preprocessing and classification
-- Building CNNs using **TensorFlow** or **PyTorch**
-
-#### 📈 Time Series Forecasting
-- Trend, seasonality, decomposition
-- Forecasting with **ARIMA**, **Facebook Prophet**
-
-### 🧪 Projects:
-- Twitter sentiment dashboard
-- OCR + document summarizer
-- Time series analysis of stock prices or weather
+In this phase, I’m diving deeper into **specific branches of data science** that align with my interests and career goals. Each specialization is tracked in its own repository, with Jupyter notebooks, projects, and resources.
 
 ---
 
-## 🚀 [Phase 5: Real-World Tools & Career Readiness](https://github.com/your-username/data-science-phase-5)
+### 💬 [Natural Language Processing (NLP)](https://github.com/your-username/data-science-nlp)
 
-### ✅ Topics:
-- **SQL** for data querying
-- Data dashboards with **Tableau** or **Power BI**
-- Model deployment:
-  - **Flask**, **FastAPI**, **Streamlit**
-  - Model hosting: **Heroku**, **Render**, **AWS**
-- MLOps basics: pipelines, monitoring
-- Collaboration & version control best practices
+Explore techniques for processing and understanding human language using machine learning and deep learning methods.
 
-### 🧪 Projects:
-- End-to-end ML app (with Flask/Streamlit)
-- Real-time dashboard with Tableau
-- Deploying a model as an API
+**Topics Covered:**
+- Text preprocessing (tokenization, stopwords, stemming, lemmatization)
+- Word embeddings (Word2Vec, GloVe, BERT)
+- Text classification & sentiment analysis
+- Named Entity Recognition (NER)
+- Topic modeling (LDA, NMF)
+- Transformer models (BERT, GPT)
 
----
-
-## 🏁 Final Goals
-- Build a strong data science portfolio
-- Contribute to open-source data science projects
-- Participate in **Kaggle** competitions
-- Apply for internships/jobs or start freelancing
+**Projects:**
+- Sentiment analysis on Twitter data
+- Text classification (spam detection)
+- Topic modeling on news articles
+- Chatbot or question answering system
 
 ---
 
-## 📂 Repo Structure
-Each phase is hosted in its own dedicated repository, containing:
-- 📘 Jupyter notebooks
-- 🛠️ Hands-on projects
-- 📄 Notes & cheatsheets
+### 🔢 [Deep Learning](https://github.com/your-username/data-science-deep-learning)
+
+Build, train, and fine-tune deep neural networks to solve complex problems in vision, language, and structured data.
+
+**Topics Covered:**
+- Fundamentals of neural networks (ANNs)
+- Backpropagation & optimization algorithms
+- CNNs for image data
+- RNNs and LSTMs for sequences
+- Attention & Transformer architectures
+- Autoencoders, GANs
+
+**Projects:**
+- MNIST handwritten digit classifier
+- Face mask detection using CNN
+- Text generation using LSTMs
+- Image-to-image translation using GANs
 
 ---
 
